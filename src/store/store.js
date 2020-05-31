@@ -1,26 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
+axios.defaults.baseURL = 'http://localhost:8000/api'
 
 export const store = new Vuex.Store({
   state:{
     filter: 'all',
     todos: [
-      /*
-      {
-        'id': 1,
-        'title': 'Finish Vue Screencast',
-        'completed': false,
-        'editing': false,
-      },
-      {
-        'id': 2,
-        'title': 'Take over world',
-        'completed': false,
-        'editing': false,
-      },
-      */
+
     ]
   },
   getters:{
@@ -45,7 +34,7 @@ export const store = new Vuex.Store({
       return state.todos.filter(todo => todo.completed).length > 0
     }
   },
-  mutations:{
+  mutations:{//harus dengan nama mutations
     addTodo(state,todo){
       state.todos.push({
         id:todo.id,
@@ -68,34 +57,80 @@ export const store = new Vuex.Store({
       state.todos.splice(index, 1)
     },
     allChecked(state,checked){
-      state.todos.forEach((todo) => todo.completed = event.target.checked)
+      state.todos.forEach(todo => (todo.completed = checked))
     },
     updateFilter(state, filter){
       state.filter = filter
     },
     clearCompleted(state){
       state.todos = state.todos.filter(todo => !todo.completed)
+    },
+    retreiveTodos(state,todos){
+      state.todos = todos
     }
   },
 
   actions:{
+    retreiveTodos(context){
+      axios.get('/todos')
+        .then(response => {
+          context.commit('retreiveTodos',response.data)
+        })
+        .catch(error => {console.log(error)})
+    },
     addTodo(context,todo){
-      context.commit('addTodo',todo)
+      axios.post('/todos',{
+        title: todo.title,
+        completed: false
+      })
+        .then(response => {
+          context.commit('addTodo',response.data)
+        })
+        .catch(error => {console.log(error)})
     },
     updateTodo(context, todo){
-      context.commit('updateTodo',todo)
+      axios.patch('/todos/' + todo.id,{
+        title: todo.title,
+        completed: todo.completed
+      })
+        .then(response => {
+          context.commit('updateTodo',response.data)
+        })
+        .catch(error => {console.log(error)})
     },
     deleteTodo(context,id){
-      context.commit('deleteTodo',id)
+      axios.delete('/todos/' + id)
+        .then(response => {
+          context.commit('deleteTodo',id)
+        })
+        .catch(error => {console.log(error)})
     },
     allChecked(context,checked){
-      context.commit('allChecked',checked)
+      axios.patch('/todosCheckAll',{
+        completed: checked
+      })
+        .then(response => {
+          context.commit('allChecked',checked)
+        })
+        .catch(error => {console.log(error)})
+
     },
     updateFilter(context, filter){
       context.commit('updateFilter',filter)
     },
     clearCompleted(context){
-      context.commit('clearCompleted')
+      const completed = context.state.todos
+        .filter(todo => todo.completed)
+        .map(todo => todo.id)
+      axios.delete('/todosDeleteCompleted',{
+        data:{
+          todos:completed
+        }
+      })
+        .then(response => {
+          context.commit('clearCompleted')
+        })
+        .catch(error => {console.log(error)})
     }
   }
 })

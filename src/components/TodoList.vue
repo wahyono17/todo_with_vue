@@ -45,6 +45,9 @@ export default {
       idForTodo: 3,
     }
   },
+  created(){
+    this.$store.dispatch('retreiveTodos') // kalau dispatch di store harus di terima di actions
+  },
   computed: {
     remaining() {
       return this.$store.getters.remaining
