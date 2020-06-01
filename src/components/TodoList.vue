@@ -81,6 +81,7 @@ export default {
 </script>
 
 <style lang="">
+
   @import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css");
 
   .todo-input {
@@ -89,10 +90,7 @@ export default {
     font-size: 18px;
     margin-bottom: 16px;
 
-    /*&:focus {
-      outline: 0;
-    }
-    */
+
 
   }
   .todo-input:focus{
@@ -106,15 +104,6 @@ export default {
     justify-content: space-between;
     animation-duration: 0.3s;
   }
-/*
-  .remove-item {
-    cursor: pointer;
-    margin-left: 14px;
-  }
-  .remove-item:hover{
-    color: black;
-  }
-*/
 
   .todo-item-left {
     display: flex;
@@ -135,11 +124,7 @@ export default {
     padding: 10px;
     border: 1px solid #ccc;
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    /*
-    &:focus {
-      outline: none;
-    }
-    */
+
   }
 
   .completed {
@@ -161,15 +146,7 @@ export default {
     font-size: 14px;
     background-color: white;
     appearance: none;
-    /*
-    &:hover {
-      background: lightgreen;
-    }
 
-    &:focus {
-      outline: none;
-    }
-    */
   }
 
   .active {
@@ -184,4 +161,5 @@ export default {
   .fade-enter, .fade-leave-to {
     opacity: 0;
   }
+
 </style>
