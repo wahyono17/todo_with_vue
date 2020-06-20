@@ -100,3 +100,7 @@ export const store = new Vuex.Store({
   }
 })
 
+/*
+coba tambah command saja untuk test git, ini comment di 04-vuex
+*/
+
