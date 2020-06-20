@@ -74,10 +74,19 @@ export const store = new Vuex.Store({
     },
     retrieveToken(state,token){
       state.token = token
+    },
+    destroyToken(state){
+      state.token = null
     }
   },
 
   actions:{
+    destroyToken(context){
+      if(context.getters.loggedIn){
+        localStorage.removeItem('access_token')
+        context.commit('destroyToken')
+      }
+    },
     retrieveToken(context,credentials){
       return new Promise((resolve,reject) => {
         axios.post('/login',{
