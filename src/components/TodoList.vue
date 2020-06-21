@@ -45,7 +45,7 @@ export default {
       idForTodo: 3,
     }
   },
-  created(){
+  created(){ //pertama kali component ini di click maka akan panggil untuk menerima list todo
     this.$store.dispatch('retreiveTodos') // kalau dispatch di store harus di terima di actions
   },
   computed: {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     addTodo() {
-      if (this.newTodo.trim().length == 0) {
+      if (this.newTodo.trim().length == 0) { //jika belum ketikan apa2, maka tidak bisa di save
         return
       }
 

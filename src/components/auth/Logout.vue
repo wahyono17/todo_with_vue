@@ -6,6 +6,7 @@
 <script>
 export default {
     created(){
+        this.$store.dispatch('clearTodos')
         this.$store.dispatch('destroyToken')
         this.$router.push({ name: 'home' })
     }
